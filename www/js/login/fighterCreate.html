@@ -1,0 +1,25 @@
+<ion-view title="fighterCreate">
+	<ion-content>
+		<label class="item item-input">
+  			<span class="input-label">Name</span>
+  			<input type="text" ng-model="csUser.userName">
+		</label>
+		<label class="item item-input">
+  			<span class="input-label">Cancer</span>
+  			<input type="text" ng-model="csUser.cancerType">
+		</label>
+		<label class="item item-input">
+			<span class="input-label">Birthday</span>
+		  	<input type="date"  ng-model="csUser.birthday">
+		</label>
+		<label class="item item-input">
+  			<span class="input-label">Location</span>
+  			<input type="text" ng-model="csUser.location">
+		</label>
+		<label class="item item-input">
+  			<span class="input-label">Bio (or add later)</span>
+  			<input type="text" ng-model="csUser.bio">
+		</label>
+		<a class="button button-assertive" ng-click="fighterCreate()">done</a>
+	</ion-content>
+</ion-view>
