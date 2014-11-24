@@ -21,18 +21,7 @@ angular.module('csApp', ['ionic', 'csApp.controllers', 'csApp.services', 'fireba
   });
 
    $rootScope.$on('$firebaseAuth', function(event, user) {
-    var ref = new Firebase("https://cancer-spot.firebaseio.com/" + 'users/' + id);
-    var sync = $firebase(ref);
     
-    var authData = ref.getAuth();
-    $rootScope.authData = authData;
-    
-    var id = authData.user.id;
-    $rootScope.userId = id;
-
-    console.log("logged in, userId", $rootScope.userId);
-    var csRef = new Firebase("https://cancer-spot.firebaseio.com/" + 'users/' + id + "/csUser"); 
-    var csSync = $firebase(csRef);
 
 
 
@@ -47,18 +36,6 @@ angular.module('csApp', ['ionic', 'csApp.controllers', 'csApp.services', 'fireba
     // var csSync = $firebase(csRef);
     
 
-    console.log(csSync);
-  
-      if (sync.type === "registered") {
-        $state.go('tab.profile');
-        console.log("IT WORKS FOOLZ");
-       } else {
-         userSession.user.type = "pending";
-         sync.$set(authData.user);
-         console.log(user);
-         console.log("RUNNIN ELSE");
-         $state.go('fss');
-        }
       
    });
 
@@ -115,7 +92,17 @@ angular.module('csApp', ['ionic', 'csApp.controllers', 'csApp.services', 'fireba
     //     controller:'loginCtrl'
     // })
 
-
+    .state('profile', {
+          url: '/profile',
+          templateUrl: 'js/profile/profile.html',
+          controller: 'profileCtrl'
+    })
+    .state('friend-detail', {
+        url: '/friend-detail/:id',
+        templateUrl: 'templates/friend-detail.html',
+        controller: 'friendDetailCtrl'
+          
+    })
     // setup an abstract state for the tabs directive
     .state('tab', {
       url: "/tab",
@@ -134,7 +121,7 @@ angular.module('csApp', ['ionic', 'csApp.controllers', 'csApp.services', 'fireba
         }
       }
     })
-
+    
     .state('tab.connections', {
       url: '/connections',
       views: {
@@ -144,22 +131,35 @@ angular.module('csApp', ['ionic', 'csApp.controllers', 'csApp.services', 'fireba
         }
       }
     })
-    .state('tab.friend-detail', {
-      url: '/connections/:friendId',
+    .state('tab.messages', {
+      url: '/messages',
       views: {
-        'tab-connections': {
-          templateUrl: 'templates/friend-detail.html',
-          controller: 'FriendDetailCtrl'
+        'tab-messages': {
+          templateUrl: 'js/messaging/tab-messages.html',
+          controller: 'messagesCtrl'
         }
       }
     })
-
-    .state('tab.profile', {
-      url: '/profile',
+    .state('chat', {
+      url: '/chat/:cid',
+      templateUrl: 'js/messaging/chat.html',
+      controller: 'chatCtrl'
+    })
+    .state('tab.floor', {
+      url: '/floor',
       views: {
-        'tab-profile': {
-          templateUrl: 'js/profile/tab-profile.html',
+        'tab-floor': {
+          templateUrl: 'js/floor/tab-floor.html',
           controller: 'profileCtrl'
+        }
+      }
+    })
+    .state('tab.more', {
+      url: '/more',
+      views: {
+        'tab-more': {
+          templateUrl: 'js/more/tab-more.html',
+          controller: 'moreCtrl'
         }
       }
     });

@@ -1,0 +1,16 @@
+<ion-view title="Chat">
+  <ion-content class="padding">
+    <a ng-repeat="message in messages" class="item">
+      		
+      		<h2>{{message.senderId}}</h2>
+      		<h3>{{message.text}}</h3>
+      			
+    </a>
+    <div ng-submit="sendMessage()">
+        <input type="text" class="input-label" ng-model="messageText" placeholder="Type your message" />
+            <span>
+            	<button type="submit" class="button button-positive" ng-click="">Send</button>
+            </span>
+    </div>
+  </ion-content>
+</ion-view>

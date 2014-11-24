@@ -4,9 +4,25 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view title="{{friend.name}}">
-  <ion-content has-header="true" padding="true">
-  	<h1>{{friend.name}}</h1>
-  	<h3>{{friend.id}}</h3>
-  </ion-content>
+
+<ion-view title="{{user.displayName}}">
+    <ion-content has-header="true" padding="true">
+        <h4>{{user.displayName}}</h4>
+        <img src="{{user.cachedUserProfile.picture.data.url}}">
+        
+        <h6>{{user.csUser.cancerType}}</h6>
+        <h6>{{user.csUser.location}}</h6>
+        <h6>{{user.csUser.birthday}}</h6>
+        <h6>{{user.csUser.bio}}</h6>
+
+        <a class="button button-light">
+          Message
+        </a>
+
+        <!-- <div ng-switch="user.provider">
+            <img ng-switch-when="facebook" ng-src="{{user.thirdPartyUserData.picture.data.url}}"/>
+            <img ng-switch-when="google" ng-src="{{user.thirdPartyUserData.picture}}" height="100" width="100"/>
+            <img ng-switch-when="twitter" ng-src="{{user.thirdPartyUserData.profile_image_url}}"/>
+        </div>    -->
+    </ion-content>
 </ion-view>

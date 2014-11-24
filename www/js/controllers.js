@@ -1,36 +1,122 @@
 angular.module('csApp.controllers', [])
 
-.controller('exploreCtrl', function($scope, $stateParams){
+.controller('exploreCtrl', function($scope, firebaseService, $stateParams, $rootScope, $state, messageService){
+	$scope.users = firebaseService.getUsers();
+	
+
+	$scope.goTo = function(id) {
+		$state.go('friend-detail/' + id);
+	};
+
+	$scope.createChat = function(){
+		var me = firebaseService.getUser();
+		messageService.createChat(me.facebook.id, this.user.id, me.facebook.displayName, this.user.csUser.userName);
+		var cid = me.facebook.id + this.user.id;
+		$state.go('chat/' + cid);	
+	};
+  	
 
 })
 
-.controller('connectionsCtrl', function($scope, Friends, $stateParams) {
-  $scope.friends = Friends.all();
+.controller('connectionsCtrl', function($scope, firebaseService, $stateParams, $rootScope) {
+  // $scope.users = firebaseService.getUsers();
 })
 
-.controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
-  $scope.friend = Friends.get($stateParams.friendId);
+.controller('friendDetailCtrl', function($scope, $stateParams, firebaseService, $rootScope, $state) {
+  $scope.user = firebaseService.getUserData($stateParams.id);
+
+
+
+  // $scope.friend = Friends.get($stateParams.friendId);
 })
 
-.controller('profileCtrl', function($scope, userSession, $rootScope, $firebase, firebaseService) {
-	$scope.currentUser = firebaseService.getUser();
+.controller('profileCtrl', function($scope, userSession, $rootScope, $firebase, firebaseService, $state) {
+	var getAuth = function() {
+		return firebaseService.getUser();
+	}
+	$scope.auth = getAuth();
 
-	console.log($scope.currentUser);
 
+
+	var parseId = function() {
+	    var arr = $scope.auth.uid.split('');
+	    var id = [];
+
+	    for (var i = 0; i < arr.length; i++) {
+			if(parseInt(arr[i]) || arr[i] === '0') {
+				id.push(arr[i])
+			}
+	      
+	    };
+	    id = id.join('');
+	    $scope.id = id;
+	    }();
+
+	var setUser = function() {
+		return firebaseService.getUserData($scope.id);
+	};
+
+
+	$scope.currentUser = setUser();
+
+	console.log("Current User is... this mutha trucka :", $scope.currentUser);
 
 	$scope.logout=function(){
-    	ref.unauth();
+    	firebaseService.logoutUser();
+    	$state.go('login')
 	}
 
 })
 
-.controller('loginCtrl', function($scope, $firebaseAuth, $firebase, FIREBASE_REF, userSession, $stateParams, $rootScope, $state){
+.controller('loginCtrl', function($scope, $firebaseAuth, $firebase, FIREBASE_REF, userSession, $stateParams, $rootScope, $state, firebaseService){
     
     var ref = new Firebase("https://cancer-spot.firebaseio.com/");
+    var userRef = new Firebase("https://cancer-spot.firebaseio.com/users")
     var auth = $firebaseAuth(ref);
+
+
+
+
+
+	// Handle third party login providers
+    // returns a promise
+    // function thirdPartyLogin(provider) {
+    //     var deferred = $.Deferred();
+
+    //     auth.authWithOAuthPopup(provider, function (err, user) {
+    //         if (err) {
+    //             deferred.reject(err);
+    //         }
+
+    //         if (user) {
+    //             deferred.resolve(user);
+    //         }
+    //     });
+
+    //     return deferred.promise();
+    // };
+
+
+
     
     auth.$authWithOAuthPopup("facebook").then(function(authData) {
-    console.log("Logged in as:", authData.uid);
+    console.log("Logged in as:", authData);
+    console.log('id is omg: ', authData.facebook.cachedUserProfile.id);
+    var check = firebaseService.getUserData(authData.facebook.cachedUserProfile.id);
+    console.log('check is', check);
+
+	 
+	// Tests to see if /users/<userId> has any data. 
+	  userRef.child(authData.facebook.cachedUserProfile.id).once('value', function(snapshot) { 
+	  	
+	    $scope.exists = (snapshot.val() !== null);
+	    userExistsCallback(userId, exists);
+	  		});
+    if ($scope.exists) {
+        	$state.go('tab.explore');
+        	console.log("IT WORKS FOOLZ");
+       	} else {
+	        
 
       	var id = authData.facebook.id;
       	var ref = new Firebase("https://cancer-spot.firebaseio.com/" + 'users/' + id);
@@ -47,17 +133,11 @@ angular.module('csApp.controllers', [])
 	    var csRef = new Firebase("https://cancer-spot.firebaseio.com/" + 'users/' + id + "/csUser"); 
 	    var csSync = $firebase(csRef);
 
-
-    	console.log(csSync);
-  
-      	if (sync.type === "registered") {
-        	$state.go('tab.profile');
-        	console.log("IT WORKS FOOLZ");
-       	} else {
-	        authData.facebook.type = "pending";
+  		authData.type = "pending";
 	        sync.$set(authData.facebook);
 	        console.log("RUNNIN ELSE");
 	        $state.go('fss');
+      	
         }
     }).catch(function(error) {
       console.error("Authentication failed: ", error);
@@ -86,9 +166,7 @@ angular.module('csApp.controllers', [])
 		$scope.fss = function(item){
 				csUser.$set({type: item, coolLevel: 10});
 				typeSync.$update({type: "registered"});
-
 				console.log(item);
-				
 				$state.go('fighterCreate');
 
 			}
@@ -97,10 +175,46 @@ angular.module('csApp.controllers', [])
 			console.log(csUser);
 			csUser.$update($scope.csUser);
 
-			$state.go('tab.profile');
+			$state.go('tab.explore');
 		}
+
+})
+.controller('messagesCtrl', function($scope, messageService, $state, $stateParams){
+
+	$scope.messages = messageService.getMessages();
+})
+.controller('chatCtrl', function($scope, messageService, $stateParams, $rootScope, $state){
+	
+	$scope.messages = messageService.getChat($stateParams.cid);
+
+	console.log($scope.messages)
+	
+    var side = 'left';
+            
+    $scope.sendMessage = function () {
+        if(side === 'left'){
+            side = 'right';
+        }else {
+            side = 'left';
+        }
+        $scope.messages.$add({text: $scope.messageText, side: side});
+        $scope.messageText = "";
+    };
+
+
+  	// $scope.goTo = function(scrn) {
+  	// 	$state.go(scrn);
+  	// }
+})
+.controller('moreCtrl', function($scope, $stateParams, $rootScope, $state){
+	
+  	$scope.goTo = function(scrn) {
+  		$state.go(scrn);
+  	}
 
 })
 .service('mainService', function($firebase){
 
 })
+
+// spencer and rowan promised me all of alex's equity. ~Ean
