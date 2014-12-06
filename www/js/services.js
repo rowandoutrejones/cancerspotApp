@@ -66,8 +66,9 @@ angular.module('csApp.services', [])
       chatsSync.$set(chatNodeId, {
         cid: chatNodeId,
         messages: [{
-            text: 'Whats Up',
+            text: '',
             senderId: userId,
+            side: '',
             timeStamp: ''
           }]
         }).then(function(data){
@@ -102,6 +103,10 @@ angular.module('csApp.services', [])
 
     getChat: function(cid){
       return $firebase(new Firebase(fireUrl + 'chats/' + cid + '/messages')).$asArray();
+    },
+
+    getMyChats: function(userId){
+      return $firebase(new Firebase(fireUrl + 'users/' + userId + '/myChats')).$asArray();
     }
 
     // getChatRoom: function(chatRoomId){

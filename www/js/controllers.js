@@ -182,23 +182,38 @@ angular.module('csApp.controllers', [])
 .controller('messagesCtrl', function($scope, messageService, $state, $stateParams){
 
 	$scope.messages = messageService.getMessages();
+	// $scope.messages = messageService.getMyChats();
 })
-.controller('chatCtrl', function($scope, messageService, $stateParams, $rootScope, $state){
+.controller('chatCtrl', function($scope, messageService, firebaseService, $stateParams, $rootScope, $state){
 	
 	$scope.messages = messageService.getChat($stateParams.cid);
 
 	console.log($scope.messages)
-	
     var side = 'left';
-            
-    $scope.sendMessage = function () {
-        if(side === 'left'){
-            side = 'right';
-        }else {
-            side = 'left';
-        }
-        $scope.messages.$add({text: $scope.messageText, side: side});
-        $scope.messageText = "";
+    var me = firebaseService.getUser();
+    var userId = me.facebook.id;
+    console.log(userId);   
+    console.log('messages: ', $scope.messages)
+    var changeSide = function(arr) {
+    	debugger;
+    	console.log('arr: ', arr[0])
+    	for (var i = 0; i < arr.length; i++) {
+    		console.log(arr[i])
+    		if(arr[i].senderId === userId) {
+    			arr[i].side = 'right';
+    		}
+    	};
+    };
+    changeSide($scope.messages);
+    $scope.sendMessage = function (textMessage) {
+        
+        $scope.messages.$add({
+        	text: textMessage, 
+        	senderId: userId,
+        	side: side,
+        	timestamp: ''
+        });
+        
     };
 
 

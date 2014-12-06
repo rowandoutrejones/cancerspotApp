@@ -3,4 +3,10 @@ $csBrightRed: #f83f3d;
 $csBlue: #caeaf6;
 $csGrey: #94928f;
 
+body {
+	background: transparent;
+}
 
+.left {
+	border: 1px solid red;
+}
