@@ -1,13 +1,11 @@
-<ion-view title="Chat">
-  <ion-content class="padding">
-    <a ng-repeat="message in messages" class="item">
-      		<div ng-class="{left: message.side === 'left'}">
-      			<h6>{{message.senderId}}</h6>
-      			<h3>{{message.text}}</h3>
-      			<h3>{{message.side}}</h3>
-      		</div>
-      			
-    </a>
+<ion-view title="chat" >
+  <ion-content class="chatBody padding" style="background: #ebebeb">
+ 
+    <div ng-repeat="message in messages" class="bubble-container" ng-class="{left: userId !== message.senderId}" >
+    		<div class="textBox">
+      			{{message.text}}
+      		</div>      			
+    </div>
     
     <!-- <label class="item item-input">
   		<span class="input-label">Type Message</span>
@@ -15,8 +13,8 @@
 	</label> -->
 
 
-    <div>
-        <input type="text" class="input-label" ng-model="messageText" placeholder="Type your message" />
+    <div class="row-chat">
+        <input type="text" class="msgInput" ng-model="messageText" placeholder="Type your message" />
             <span>
             	<button class="button button-positive" ng-click="sendMessage(messageText)">Send</button>
             </span>

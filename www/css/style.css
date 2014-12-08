@@ -2,11 +2,71 @@ $csRed: #d74140;
 $csBrightRed: #f83f3d;
 $csBlue: #caeaf6;
 $csGrey: #94928f;
+$csFightBlue: #418bc5;
+$csSurYellow: #f1c40f;
+$csSupGreen: #2ecc71;
+
 
 body {
 	background: transparent;
+	font-family: 'Roboto', sans-serif;
+}
+
+.bar {
+	background-color: #d74140;
+	height: 7%;
+	color: #fff;
+	vertical-align: middle;
+}
+
+.bar h1 {
+	color: #fff;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+}
+
+/*CHAT TEMPLATE*/
+/*.topHat{
+	height: 10%;
+	background-color: #d74140;
+	color: #fff;*/
+}
+
+.chatBody {
+	background-color: #EBEBEB;
+}
+
+.bubble-container {
+	display:block;
+	clear: both;
+	position:relative;
+	float: right;
+	margin-bottom:10px;
+	min-height: 40px;
+	padding: 10px;
+	background-color: #fff;
+	width: 60%;
+	color: #000;
+	border-radius: 2px;
 }
 
 .left {
-	border: 1px solid red;
+	background-color: #418bc5 !important;
+	float: left !important;
+	color: #fff !important;
 }
+
+.right {
+	float: right;
+}
+
+.row-chat{
+	bottom: 20px;
+	margin: 0;
+	width: 100%;
+}
+
+/*.textBox {
+	padding-right: 5px;
+	padding-left: 5px;
+}*/

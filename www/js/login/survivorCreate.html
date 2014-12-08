@@ -2,27 +2,28 @@
 	<ion-content>
 		<label class="item item-input">
   			<span class="input-label">Name</span>
-  			<input type="text">
+  			<input type="text" ng-model="csUser.userName">
 		</label>
 		<label class="item item-input">
   			<span class="input-label">Cancer</span>
-  			<input type="text">
+  			<input type="text" ng-model="csUser.cancerType">
 		</label>
 		<label class="item item-input">
 			<span class="input-label">Years out of Treatment</span>
-		  	<input type="date">
+		  	<input type="number" ng-model="csUser.yoot">
 		</label>
 		<label class="item item-input">
 			<span class="input-label">Birthday</span>
-		  	<input type="date">
+		  	<input type="date" ng-model="csUser.birthday">
 		</label>
 		<label class="item item-input">
   			<span class="input-label">Location</span>
-  			<input type="text">
+  			<input type="text" ng-model="csUser.location">
 		</label>
 		<label class="item item-input">
   			<span class="input-label">Bio</span>
-  			<input type="text">
+  			<input type="text" ng-model="csUser.bio">
 		</label>
+		<a class="button button-assertive" ng-click="survivorCreate()">done</a>
 	</ion-content>
 </ion-view>

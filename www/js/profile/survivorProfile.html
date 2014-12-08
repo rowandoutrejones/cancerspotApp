@@ -1,0 +1,20 @@
+<ion-view title="Welcome">
+    <ion-content has-header="true" padding="true">
+        <h4>Welcome, {{currentUser.csUser.userName}}</h4>
+        <img src="{{currentUser.cachedUserProfile.picture.data.url}}">
+        
+        <h6>{{currentUser.csUser.cancerType}}</h6>
+        <h6>{{currentUser.csUser.yoot}}</h6>
+        <h6>{{currentUser.csUser.location}}</h6>
+        <h6>{{currentUser.csUser.birthday}}</h6>
+        <h6>{{currentUser.csUser.bio}}</h6>
+        
+
+        <!-- <div ng-switch="currentUser.provider">
+            <img ng-switch-when="facebook" ng-src="{{currentUser.cachedUserProfile.picture.data.url}}"/>
+            <img ng-switch-when="google" ng-src="{{user.thirdPartyUserData.picture}}" height="100" width="100"/>
+            <img ng-switch-when="twitter" ng-src="{{user.thirdPartyUserData.profile_image_url}}"/>
+        </div> -->
+        <a href ng-click="logout()">Log out</a>    
+    </ion-content>
+</ion-view>

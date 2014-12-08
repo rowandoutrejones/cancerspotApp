@@ -2,7 +2,8 @@
   <ion-content class="padding">
     <a ng-repeat="message in messages" class="item item-avatar" href="/#/chat/{{message.cid}}">
       		<!-- <img src="{{user.cachedUserProfile.picture.data.url}}"> -->
-      		<h2>{{message.cid}}</h2>
+      		<h5>{{message.cid}}</h5>
+      		<h2>{{message.chatters.0.name}}</h2>
       			<!-- <p>{{message.csUser.cancerType}}</p>
       			<p>{{message.csUser.location}}</p> -->
     </a>

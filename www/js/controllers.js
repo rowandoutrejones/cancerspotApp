@@ -2,10 +2,15 @@ angular.module('csApp.controllers', [])
 
 .controller('exploreCtrl', function($scope, firebaseService, $stateParams, $rootScope, $state, messageService){
 	$scope.users = firebaseService.getUsers();
-	
+	console.log($scope.users);
 
 	$scope.goTo = function(id) {
-		$state.go('friend-detail/' + id);
+		debugger;
+		if(users.id.csUser.type === 'supporter') {
+			$state.go('friend-detail-supporter/' + id);
+		} else {
+			$state.go('friend-detail/' + id);
+		}
 	};
 
 	$scope.createChat = function(){
@@ -163,13 +168,12 @@ angular.module('csApp.controllers', [])
     	
     	 
 
-		$scope.fss = function(item){
+		$scope.fss = function(item, link){
 				csUser.$set({type: item, coolLevel: 10});
 				typeSync.$update({type: "registered"});
 				console.log(item);
-				$state.go('fighterCreate');
-
-			}
+				$state.go(link);
+		}
 
 		$scope.fighterCreate = function(){
 			console.log(csUser);
@@ -178,11 +182,28 @@ angular.module('csApp.controllers', [])
 			$state.go('tab.explore');
 		}
 
-})
-.controller('messagesCtrl', function($scope, messageService, $state, $stateParams){
+		$scope.survivorCreate = function(){
+			console.log(csUser);
+			csUser.$update($scope.csUser);
 
-	$scope.messages = messageService.getMessages();
-	// $scope.messages = messageService.getMyChats();
+			$state.go('tab.explore');
+		}
+
+		$scope.supporterCreate = function(){
+			console.log(csUser);
+			csUser.$update($scope.csUser);
+
+			$state.go('tab.explore');
+		}
+
+})
+.controller('messagesCtrl', function($scope, messageService, $state, $stateParams, firebaseService){
+
+	var me = firebaseService.getUser();
+	$scope.messages = messageService.getMyChats(me.facebook.id);
+	console.log($scope.messages);
+
+
 })
 .controller('chatCtrl', function($scope, messageService, firebaseService, $stateParams, $rootScope, $state){
 	
@@ -190,30 +211,17 @@ angular.module('csApp.controllers', [])
 
 	console.log($scope.messages)
     var side = 'left';
-    var me = firebaseService.getUser();
-    var userId = me.facebook.id;
-    console.log(userId);   
-    console.log('messages: ', $scope.messages)
-    var changeSide = function(arr) {
-    	debugger;
-    	console.log('arr: ', arr[0])
-    	for (var i = 0; i < arr.length; i++) {
-    		console.log(arr[i])
-    		if(arr[i].senderId === userId) {
-    			arr[i].side = 'right';
-    		}
-    	};
-    };
-    changeSide($scope.messages);
-    $scope.sendMessage = function (textMessage) {
-        
+    $scope.me = firebaseService.getUser();
+    $scope.userId = $scope.me.facebook.id;
+
+    console.log('userId:', $scope.userId);   
+    $scope.sendMessage = function(textMessage) {
         $scope.messages.$add({
         	text: textMessage, 
-        	senderId: userId,
-        	side: side,
+        	senderId: $scope.userId,
         	timestamp: ''
         });
-        
+        $scope.messageText = "";
     };
 
 

@@ -1,11 +1,12 @@
 <ion-view title="Explore">
   <ion-content>
     <ion-list>
-    	<a ng-repeat="user in users" class="item item-avatar item-button-right" href="/#/friend-detail/{{user.id}}">
+    	<a ng-repeat="user in users" class="item item-avatar item-button-right" href="/#/friend-detail/{{user.csUser.type}}/{{user.id}}">
+
       		<img src="{{user.cachedUserProfile.picture.data.url}}">
-      		<h2>{{user.displayName}}</h2>
-      			<p>{{user.csUser.cancerType}}</p>
-      			<p>{{user.csUser.location}}</p>
+      		  <h2>{{user.displayName}}</h2>
+      			<h3>{{user.csUser.cancerType}}</h3>
+      			<h4>{{user.csUser.location}}</h4>
       		<button class="button button-assertive" ng-click="createChat()">
 		    	<i class="icon ion-chatbubble"></i>
 		    </button>

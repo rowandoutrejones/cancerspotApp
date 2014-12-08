@@ -80,29 +80,55 @@ angular.module('csApp', ['ionic', 'csApp.controllers', 'csApp.services', 'fireba
         controller:'fssCtrl'
     })
 
-    // .state('survivorCreate',{
-    //     url:'/login/survivorCreate',
-    //     templateUrl:'js/login/survivorCreate.html',
-    //     controller:'loginCtrl'
-    // })
+    .state('survivorCreate',{
+        url:'/login/survivorCreate',
+        templateUrl:'js/login/survivorCreate.html',
+        controller:'fssCtrl'
+    })
 
-    // .state('supporterCreate',{
-    //     url:'/login/supporterCreate',
-    //     templateUrl:'js/login/supporterCreate.html',
-    //     controller:'loginCtrl'
-    // })
+    .state('supporterCreate',{
+        url:'/login/supporterCreate',
+        templateUrl:'js/login/supporterCreate.html',
+        controller:'fssCtrl'
+    })
+
+    // PROFILES 
 
     .state('profile', {
           url: '/profile',
           templateUrl: 'js/profile/profile.html',
           controller: 'profileCtrl'
     })
-    .state('friend-detail', {
-        url: '/friend-detail/:id',
-        templateUrl: 'templates/friend-detail.html',
-        controller: 'friendDetailCtrl'
-          
+    .state('survivorProfile', {
+          url: '/profile',
+          templateUrl: 'js/profile/survivorProfile.html',
+          controller: 'profileCtrl'
     })
+    .state('supporterProfile', {
+          url: '/profile',
+          templateUrl: 'js/profile/supporterProfile.html',
+          controller: 'profileCtrl'
+    })
+    
+    // FRIEND DETAILS
+
+    .state('friend-detail-fighter', {
+        url: '/friend-detail/fighter/:id',
+        templateUrl: 'templates/friend-detail-fighter.html',
+        controller: 'friendDetailCtrl'      
+    })
+    .state('friend-detail-survivor', {
+        url: '/friend-detail/survivor/:id',
+        templateUrl: 'templates/friend-detail-survivor.html',
+        controller: 'friendDetailCtrl'      
+    })
+    .state('friend-detail-supporter', {
+        url: '/friend-detail/supporter/:id',
+        templateUrl: 'templates/friend-detail-supporter.html',
+        controller: 'friendDetailCtrl'      
+    })
+
+
     // setup an abstract state for the tabs directive
     .state('tab', {
       url: "/tab",
