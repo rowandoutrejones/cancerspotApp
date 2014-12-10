@@ -1,9 +1,11 @@
-<ion-view title="chat" >
+<ion-view title="{{friend.0.chatters.0.name}}">
   <ion-content class="chatBody padding" style="background: #ebebeb">
  
     <div ng-repeat="message in messages" class="bubble-container" ng-class="{left: userId !== message.senderId}" >
     		<div class="textBox">
-      			{{message.text}}
+      			{{message.text}}<br>
+            <span class="timestamp">{{message.timestamp | date:"EEE 'at' h:mma"}}</span>
+            <!-- <span ng-non-bindable>{{10204394861424752 | date:"MM/dd/yyyy 'at' h:mma"}}</span> -->
       		</div>      			
     </div>
     
@@ -14,10 +16,11 @@
 
 
     <div class="row-chat">
-        <input type="text" class="msgInput" ng-model="messageText" placeholder="Type your message" />
-            <span>
-            	<button class="button button-positive" ng-click="sendMessage(messageText)">Send</button>
-            </span>
+      <form novalidate name="form" ng-submit="sendMessage(messageText)">
+        <input name="mess" type="text" class="msgInput" ng-model="messageText" placeholder="Type your message" />
+          <button type="submit" class="button button-positive" ng-click="reset(messageText)">Send</button>
+      </form>
+
     </div>
   </ion-content>
 </ion-view>

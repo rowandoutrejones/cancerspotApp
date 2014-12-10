@@ -1,17 +1,27 @@
 <ion-view title="{{user.displayName}}">
-    <ion-content has-header="true" padding="true">
-        <h4>{{user.displayName}}</h4>
-        <img src="{{user.cachedUserProfile.picture.data.url}}">
+    <ion-content has-header="true">
         
-        <h6>{{user.csUser.type}}</h6>
-        <h6>{{user.csUser.cancerType}}</h6>
-        <h6>{{user.csUser.yoot}} years out of treatement</h6>
-        <h6>{{user.csUser.location}}</h6>
-        <h6>{{user.csUser.birthday}}</h6>
-        <h6>{{user.csUser.bio}}</h6>
+        
+        <div class="proImgBox">
+            <img src="{{user.cachedUserProfile.picture.data.url}}">
+        </div>
 
-        <a class="button button-light">
-          Message
+        <div class="proFssBox surYellow">
+            <h4>{{user.displayName}}</h4>
+            <h4>{{user.csUser.cancerType}}</h4>   
+            <h5>{{user.csUser.yoot}} years out of treatement</h6>
+        </div>
+
+        <!-- <h6>{{user.csUser.type}}</h6> -->
+        
+        <div class="proTextBox">
+            <h5>{{user.csUser.location}} | {{user.csUser.birthday}}</h5>
+            <h5 class="theBio">{{user.csUser.bio}}</h5>
+        </div>
+
+
+        <a class="proMsgButton csRed">
+          +
         </a>
 
         <!-- <div ng-switch="user.provider">

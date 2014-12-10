@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('csApp', ['ionic', 'csApp.controllers', 'csApp.services', 'firebase'])
+angular.module('csApp', ['ionic', 'firebase', 'csApp.controllers', 'csApp.services'])
 
 .run(function($ionicPlatform, $rootScope, $state, userSession, $firebase) {
   $ionicPlatform.ready(function() {

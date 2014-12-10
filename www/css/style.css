@@ -6,11 +6,43 @@ $csFightBlue: #418bc5;
 $csSurYellow: #f1c40f;
 $csSupGreen: #2ecc71;
 
-
 body {
 	background: transparent;
 	font-family: 'Roboto', sans-serif;
 }
+
+/*COLORS*/
+
+.csRed {
+	background-color: #d74140;
+}
+
+.csBrightRed {
+	background-color: #f83f3d;
+}
+
+.csBlue {
+	background-color: #caeaf6;
+}
+
+.csGrey {
+	background-color: #94928f;
+}
+
+.fightBlue {
+	background-color: #418bc5;
+}
+
+.surYellow {
+	background-color: #f1c40f;
+}
+
+.supGreen {
+	background-color: #2ecc71;
+}
+
+
+/*BAR*/
 
 .bar {
 	background-color: #d74140;
@@ -43,7 +75,7 @@ body {
 	float: right;
 	margin-bottom:10px;
 	min-height: 40px;
-	padding: 10px;
+	padding: 7px;
 	background-color: #fff;
 	width: 60%;
 	color: #000;
@@ -70,3 +102,62 @@ body {
 	padding-right: 5px;
 	padding-left: 5px;
 }*/
+
+.timestamp {
+	font-size: 6pt;
+	padding-top: 1px;
+	color: #fff;
+	float: left;
+}
+
+span .timestamp .ng-binding {
+	color: #94928f;
+}
+
+
+
+/*PROFILE & FRIEND-DETAIL*/
+
+.proImgBox {
+	width: 100%;
+	height: 50%;
+
+}
+
+.proImgBox img {
+	padding-top: 15px;
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+}
+.proFssBox {
+	width: 100%;
+	height: 10%;
+	color: #fff;
+	text-align: center;
+}
+.proFssBox .ng-binding {
+	margin-top: 3px;
+	margin-bottom: 3px;
+	color: #fff;
+	font-family: 'Roboto';
+	
+}
+
+.proTextBox {
+	width: 100%;
+	padding: 10px;
+}
+.theBio {
+	font-family: 'Roboto';
+	font-weight: 300;
+	width: 100%;
+}
+.proMsgButton {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+.proMsgButton: active {
+	background-color: #caeaf6;
+}
